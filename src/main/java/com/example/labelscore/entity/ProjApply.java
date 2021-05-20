@@ -3,28 +3,36 @@ package com.example.labelscore.entity;
 import com.example.labelscore.core.RootModel;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * @Description TODO
- * @Date 2021/4/11 18:57
+ * @Date 2021/4/11 18:53
  * @Created by hdw
  */
-public class AfterProjApply extends RootModel implements Serializable {
+@Table(name = "fp_proj_apply")
+@Entity
+@Immutable
+public class ProjApply extends RootModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    protected AfterProjApply() {
-        super("afterModel");
+    public ProjApply() {
+        super("commonModel");
     }
 
     /**
@@ -57,6 +65,18 @@ public class AfterProjApply extends RootModel implements Serializable {
      */
     @Column(name = "plate_category", nullable = false)
     private String plateCategory;
+
+    @JoinColumn(referencedColumnName = "cust_no", name = "primary_financier", updatable = false, insertable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Where(clause = "rownum = 1")
+    private ViewTruCustomerInfo viewTruCustomerInfo;
+
+    @JoinColumn(referencedColumnName = "cust_no", name = "primary_financier", updatable = false, insertable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @Where(clause = "rownum = 1")
+    private CustInfoCorporate custInfoCorporate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "projApply")
     @NotFound(action = NotFoundAction.IGNORE)
@@ -115,6 +135,22 @@ public class AfterProjApply extends RootModel implements Serializable {
 
     public void setPlateCategory(String plateCategory) {
         this.plateCategory = plateCategory;
+    }
+
+    public ViewTruCustomerInfo getViewTruCustomerInfo() {
+        return viewTruCustomerInfo;
+    }
+
+    public void setViewTruCustomerInfo(ViewTruCustomerInfo viewTruCustomerInfo) {
+        this.viewTruCustomerInfo = viewTruCustomerInfo;
+    }
+
+    public CustInfoCorporate getCustInfoCorporate() {
+        return custInfoCorporate;
+    }
+
+    public void setCustInfoCorporate(CustInfoCorporate custInfoCorporate) {
+        this.custInfoCorporate = custInfoCorporate;
     }
 
     public List<GuarantorInfoApply> getGuarantorInfoApply() {
