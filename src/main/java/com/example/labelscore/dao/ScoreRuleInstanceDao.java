@@ -3,6 +3,7 @@ package com.example.labelscore.dao;
 import com.example.labelscore.bean.ScoreBizSource;
 import com.example.labelscore.bean.TagRuleInstance;
 import com.example.labelscore.util.Tuple2;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date 2021/4/5 18:06
  * @Created by hdw
  */
+@Mapper
 public interface ScoreRuleInstanceDao {
     ScoreBizSource findBizSrcByIdWithScoreCard(Long scoreBizSrcId);
 
