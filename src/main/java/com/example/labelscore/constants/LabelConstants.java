@@ -37,4 +37,9 @@ public class LabelConstants {
     public static final String DEFAULT_VALUE_RULE_CODE = "ruleCode";
     public static final String DEFAULT_VALUE = "defaultValue";
 
+    /**
+     * 投后打分需要实时更新的配置从标签 ruleCode
+     */
+    public static final String RULE_CODE = "ruleCode";
+
 }
