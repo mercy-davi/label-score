@@ -1,5 +1,7 @@
 package com.example.labelscore.core;
 
+import com.example.labelscore.bean.DictInfo;
+
 import java.io.Serializable;
 import java.util.Map;
 

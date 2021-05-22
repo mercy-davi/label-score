@@ -13,6 +13,7 @@ import org.springframework.util.ObjectUtils;
 import javax.script.ScriptException;
 import java.util.Map;
 
+import static com.example.labelscore.constants.LabelConstants.RULE_CODE;
 import static com.example.labelscore.core.ScoreRuleType.Interval;
 import static com.example.labelscore.core.ScoreRuleType.IntervalH;
 

@@ -1,5 +1,6 @@
 package com.example.labelscore.core;
 
+import com.example.labelscore.bean.DictInfo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
