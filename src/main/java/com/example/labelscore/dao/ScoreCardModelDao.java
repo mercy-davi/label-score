@@ -3,6 +3,8 @@ package com.example.labelscore.dao;
 import com.example.labelscore.bean.ScoreCardModel;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @Description TODO
  * @Date 2021/4/5 18:07
@@ -10,7 +12,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ScoreCardModelDao {
-    ScoreCardModel findScoreCardModel(String card);
+    List<ScoreCardModel> findAllScoreCardModels();
 
-    ScoreCardModel findScoreCardModelById(String card);
+    ScoreCardModel findScoreCardModel(String scoreCardCode);
+
+    ScoreCardModel findScoreCardModelById(String scoreCardId);
 }
