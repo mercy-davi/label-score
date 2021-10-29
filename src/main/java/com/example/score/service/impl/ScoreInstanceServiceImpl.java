@@ -227,7 +227,7 @@ public class ScoreInstanceServiceImpl implements ScoreInstanceService {
             for (int i = contexts.length - 1; i >= 0; --i) {
                 ScoreBizSource scoreBizSource = cardType == CardType.scoreCardCode ?
                         scoreRuleInstanceDao.findBizSrcByCode(card, contexts[i]) :
-                        scoreRuleInstanceDao.finBizSrc(card, contexts[i]);
+                        scoreRuleInstanceDao.findBizSrc(card, contexts[i]);
                 if (null != scoreBizSource) {
                     return scoreBizSource;
                 }

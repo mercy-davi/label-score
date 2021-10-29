@@ -2,8 +2,10 @@ package com.example.score.dao;
 
 import com.example.score.bean.ScoreBizSource;
 import com.example.score.bean.TagRuleInstance;
+import com.example.score.bean.TagRuleInstanceWithDef;
 import com.example.score.util.Tuple2;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,57 +16,75 @@ import java.util.List;
  */
 @Mapper
 public interface ScoreRuleInstanceDao {
-    ScoreBizSource findBizSrcByIdWithScoreCard(Long scoreBizSrcId);
-
-    ScoreBizSource findBizSrcByCodeWithScoreCard(String scoreCardCode, String context);
-
-    ScoreBizSource findBizSrc(String scoreCardId, String context);
-
-    ScoreBizSource findBizSrcByCode(String scoreCardCode, String context);
-
-    List<ScoreBizSource> findAllLikeByCode(String contextLike, String scoreCardCode);
-
-    List<ScoreBizSource> findAllLike(String contextLike, String scoreCardId);
-
-    ScoreBizSource finBizSrc(String card, String context);
-
-    Boolean getScoreBizSrcSaveState(Long scoreBizSrcId);
-
-    Boolean getScoreBizSrcSaveStateByCardCode(String scoreCardCode, String context);
-
-    Boolean getScoreBizSrcSaveStateByCardId(String scoreCardId, String context);
-
-    List<TagRuleInstance> findByBizSrcIdAndLevel(long id, int maxScoreTreeLevel);
-
-    List<TagRuleInstance> findByBizSrcIdWithDef(long id);
-
-    List<Double> findAverage(Long[] averageSource, int maxScoreTreeLevel);
-
-    List<Double> findAverageByOneCardCode(String card, String[] averageSource, int maxScoreTreeLevel);
-
-    List<Double> findAverageByOneCardId(String card, String[] averageSource, int maxScoreTreeLevel);
 
     Long createNewSet();
 
-    void insertBizSrc(ScoreBizSource scoreBizSource);
+    ScoreBizSource findBizSrcById(@Param("id") Long id);
 
-    void insertList(List<TagRuleInstance> list);
+    ScoreBizSource findBizSrcByIdWithScoreCard(@Param("id") Long id);
 
-    List<Double> findAverageByCardCode(Tuple2<String, String>[] tuple2s, int maxScoreTreeLevel);
+    ScoreBizSource findBizSrc(@Param("scoreCardId") String scoreCardId, @Param("context") String context);
 
-    List<Double> findAverageByCardId(Tuple2<String, String>[] tuple2s, int maxScoreTreeLevel);
+    ScoreBizSource findBizSrcWithScoreCard(@Param("scoreCardId") String scoreCardId, @Param("context") String context);
 
-    ScoreBizSource findBizSrcById(Long id);
+    ScoreBizSource findBizSrcByCode(@Param("scoreCardCode") String scoreCardCode, @Param("context") String context);
 
-    void updateScoreBizSrcForSave(ScoreBizSource scoreBizSource);
+    ScoreBizSource findBizSrcByCodeWithScoreCard(@Param("scoreCardCode") String scoreCardCode, @Param("context") String context);
 
-    void deleteInstanceByRange(Long lastMaxId, Long currentMaxId);
+    List<ScoreBizSource> findAllLikeByCode(@Param("contextLike") String contextLike, @Param("scoreCardCode") String scoreCardCode);
 
-    void updateInstance(TagRuleInstance instance);
+    List<ScoreBizSource> findAllLike(@Param("contextLike") String contextLike, @Param("scoreCardId") String scoreCardId);
 
-    void updateFromUI(TagRuleInstance ruleInstance);
+    List<TagRuleInstance> findByBizSrcIdWithDef(@Param("bizSrcId") Long bizSrcId);
 
-    void updateParentCauseByUI(TagRuleInstance ruleInstance);
+    /**
+     * @deprecated replace by {@link #findByBizSrcIdAndLevel}
+     */
+    @Deprecated
+    List<TagRuleInstanceWithDef> findSolidInstance(@Param("bizSrcId") Long bizSrcId);
 
-    ScoreBizSource findSaveBizSrcOnlyByContext(String context);
+    int insertBizSrc(ScoreBizSource scoreBizSource);
+
+    int updateScoreBizSrcForSave(ScoreBizSource scoreBizSource);
+
+    Boolean getScoreBizSrcSaveState(@Param("bizSrcId") Long bizSrcId);
+
+    Boolean getScoreBizSrcSaveStateByCardCode(@Param("scoreCardCode") String scoreCardCode, @Param("context") String context);
+
+    Boolean getScoreBizSrcSaveStateByCardId(@Param("scoreCardId") String scoreCardId, @Param("context") String context);
+
+    int insertList(List<TagRuleInstance> list);
+
+    @Deprecated
+    int updateParentAsScoreChange(List<TagRuleInstance> list);
+
+    List<TagRuleInstance> findByBizSrcIdAndLevel(@Param("bizSrcId") Long bizSrcId, @Param("maxLevel") int maxLevel);
+
+    List<Double> findAverage(@Param("bizSrcIds") Long[] bizSrcIds, @Param("maxLevel") int maxLevel);
+
+    List<Double> findAverageByCardCode(@Param("scoreCardCodeContextTuple") Tuple2<String, String>[] scoreCardCodeContextTuple, @Param("maxLevel") int maxLevel);
+
+    List<Double> findAverageByCardId(@Param("scoreCardIdContextTuple") Tuple2<String, String>[] scoreCardCodeContextTuple, @Param("maxLevel") int maxLevel);
+
+    List<Double> findAverageByOneCardCode(@Param("scoreCardCode") String scoreCardCode, @Param("contexts") String[] contexts, @Param("maxLevel") int maxLevel);
+
+    List<Double> findAverageByOneCardId(@Param("scoreCardId") String scoreCardId, @Param("contexts") String[] contexts, @Param("maxLevel") int maxLevel);
+
+    void updateInstance(TagRuleInstance updated);
+
+    void deleteInstances(@Param("deleted") List<TagRuleInstance> deleted);
+
+    void deleteInstanceByRange(@Param("lastMaxId") Long lastMaxId, @Param("currentMaxId") Long currentMaxId);
+
+    void updateFromUI(TagRuleInstance updated);
+
+    void updateParentCauseByUI(TagRuleInstance updated);
+
+    void updatePrimaryTagScore(TagRuleInstance ruleInstance);
+
+    ScoreBizSource findSaveBizSrcOnlyByContext(@Param("context") String context);
+
+    String[] findRuleCodeByCardCode(@Param("scoreCardCode") String scoreCardCode);
+
+    String findDisplayNameByCode(@Param("ruleCode") String ruleCode);
 }

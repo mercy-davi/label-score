@@ -2,6 +2,7 @@ package com.example.score.dao;
 
 import com.example.score.bean.ScoreCardModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ScoreCardModelDao {
     List<ScoreCardModel> findAllScoreCardModels();
 
-    ScoreCardModel findScoreCardModel(String scoreCardCode);
+    ScoreCardModel findScoreCardModel(@Param("scoreCardCode") String scoreCardCode);
 
-    ScoreCardModel findScoreCardModelById(String scoreCardId);
+    ScoreCardModel findScoreCardModelById(@Param("scoreCardId") String scoreCardId);
 }
